@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Administrador
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as django_login, logout
-
-
-from django.shortcuts import render
 from django.contrib import messages
 from .models import Administrador
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest
 
 def administrador(request):
     if request.method == "POST":
@@ -16,19 +12,43 @@ def administrador(request):
         cpf = request.POST.get("cpf")
 
         try:
-            user = Administrador.objects.create_user(
-                nome_completo=nome_completo, email=email, password=password, cpf=cpf
+            admin = Administrador(
+                nome_completo=nome_completo,
+                email=email,
+                cpf=cpf
             )
-            messages.success(request, "Admin criado com sucesso")
-            return render(request, "home.html") 
+            admin.set_password(password)
+            admin.save()
+            
+            messages.success(request, "Admin criado com sucesso.")
+            return redirect("home")
         except Exception as e:
             messages.error(request, f"Erro ao criar admin: {str(e)}")
             return render(request, "dav.html")
 
-    return render(request, "dav.html") 
+    return render(request, "dav.html")
+
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, 'home.html')
+
+
+@login_required(login_url="home")
+def salvar_imagem(request: HttpRequest):
+    if request.method == "POST":
+        image = request.FILES.get("profile_image")
+        if not image:
+            messages.error(request, "Nenhuma imagem selecionada.")
+            return redirect("home")
+
+        else:
+            user = request.user
+            if hasattr(user, 'profile_image'):
+                user.profile_image = image
+                user.save()
+                messages.success(request, "logo da loja atualizado.")
+            else:
+                messages.error
 
 
 
