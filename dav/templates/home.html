@@ -28,7 +28,7 @@
         
             <div class="profile" id="profile">
                 {% if user.profile_image %}
-                <img src="{{ user.profile_image.url }}" alt="Imagem de Perfil">
+                <img src="{{ user.logo_images.url }}" alt="Imagem de Perfil">
 
                 {% endif %}
         </div>
@@ -37,7 +37,7 @@
           <form class="form px-4 py-3" method="POST" action="{% url 'salvar_imagem' %}" enctype="multipart/form-data">
             {% csrf_token %}
             
-            <input type="file" id="imageInput" name="profile_image" accept="image/*"/>
+            <input type="file" id="imageInput" name="logo_images" accept="image/*"/>
             <li>
               <button type="button" class="trocar_imagem" onclick="document.getElementById('imageInput').click();">
                 Trocar Imagem

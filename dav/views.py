@@ -36,14 +36,14 @@ def home(request):
 @login_required(login_url="home")
 def salvar_imagem(request: HttpRequest):
     if request.method == "POST":
-        image = request.FILES.get("profile_image")
+        image = request.FILES.get("logo_images")
         if not image:
             messages.error(request, "Nenhuma imagem selecionada.")
             return redirect("home")
 
         else:
             user = request.user
-            if hasattr(user, 'profile_image'):
+            if hasattr(user, 'logo_images'):
                 user.profile_image = image
                 user.save()
                 messages.success(request, "logo da loja atualizado.")
