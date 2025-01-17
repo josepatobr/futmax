@@ -1,11 +1,10 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class Administrador(models.Model):
-    nome_completo = models.CharField(max_length=30)
-    email = models.EmailField(blank=False, null=False)
-    password = models.CharField(max_length=20)    
-    cpf = models.CharField(max_length=14, primary_key=True, null=False)
-    logo_images = models.ImageField(upload_to='logo_images/', blank=True, null=True)
+class User(AbstractUser):
+   UserName = models.CharField(max_length=100, null=False, blank=True)
+   foto_perfil = models.ImageField(upload_to='foto_perfil/')
+   logo_loja = models.ImageField(upload_to='logo_images/', help_text="é recomendado você usar uma imagem que representa a sua loja")
 
-    def __str__(self):
-        return self.nome_completo
+def __str__(self):
+    return self.UserName

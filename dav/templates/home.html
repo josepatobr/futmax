@@ -13,57 +13,19 @@
   </head>
 
   <body>
-    <div class="borda">
-      <button type="button">Botão 1</button>
-      <button type="button">Botão 2</button>
-      <button type="button">Botão 3</button>
-      <button type="button">Botão 4</button>
-    </div>
-
     <div class="profile_card">
-      <h1>Logo da Loja</h1>
-      <div class="dropdown">
+        <h1>Logo da Loja</h1>
+      <form method="POST" action="{% url 'salvar_imagem' %}" enctype="multipart/form-data">{% csrf_token %}
+      
+        <input name="logo_loja" type="file" placeholder="escolha a foto da sua loja">
+        <button type="submit"> enviar </button>
 
-        <button class="botao_foto btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        
-            <div class="profile" id="profile">
-                {% if user.profile_image %}
-                <img src="{{ user.logo_images.url }}" alt="Imagem de Perfil">
+      </form>
 
-                {% endif %}
-        </div>
-        </button>
-        <ul class="dropdown-menu">
-          <form class="form px-4 py-3" method="POST" action="{% url 'salvar_imagem' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <input type="file" id="imageInput" name="logo_images" accept="image/*"/>
-            <li>
-              <button type="button" class="trocar_imagem" onclick="document.getElementById('imageInput').click();">
-                Trocar Imagem
-              </button>
-            </li>
-            <li>
-              <button type="submit" class="salvar_imagem">
-                Salvar Imagem
-              </button>
-            </li>
-            <li>
-              <button type="button" class="deletar_imagem" onclick="deleteImage()">
-                Excluir Imagem
-              </button>
-            </li>
-          </form>
-        </ul>
-      </div>
-    </div>
-     
-    <script>
-      function deleteImage() {
-        if (confirm("Tem certeza de que deseja excluir a logo?")) {
-          console.log("Imagem excluída");
-        }
-      }
-    </script>
+
+  
   </body>
-</html>
+
+      
+            
+          

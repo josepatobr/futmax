@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Administrador
+from .models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 
@@ -12,21 +12,19 @@ def administrador(request):
         cpf = request.POST.get("cpf")
 
         try:
-            admin = Administrador(
+            user = User(
                 nome_completo=nome_completo,
                 email=email,
                 cpf=cpf
             )
-            admin.set_password(password)
-            admin.save()
+            user.set_password(password)
+            user.save()
             
             messages.success(request, "Admin criado com sucesso.")
             return redirect("home")
         except Exception as e:
             messages.error(request, f"Erro ao criar admin: {str(e)}")
             return render(request, "dav.html")
-
-    return render(request, "dav.html")
 
 
 def home(request):
@@ -36,19 +34,10 @@ def home(request):
 @login_required(login_url="home")
 def salvar_imagem(request: HttpRequest):
     if request.method == "POST":
-        image = request.FILES.get("logo_images")
-        if not image:
-            messages.error(request, "Nenhuma imagem selecionada.")
-            return redirect("home")
-
-        else:
-            user = request.user
-            if hasattr(user, 'logo_images'):
-                user.profile_image = image
-                user.save()
-                messages.success(request, "logo da loja atualizado.")
-            else:
-                messages.error
+        image = request.FILES.get("logo_loja")
+        request.user.logo_loja = image
+        request.user.save()
+    return redirect("home")
 
 
 
