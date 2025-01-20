@@ -9,10 +9,10 @@
 
     <body>
         <form method="POST"> {% csrf_token %}
-            <input name="nome_completo" type="text" placeholder="digite um nome"><br>
+            <input name="first_name" type="text" placeholder="digite seu primeiro nome"><br>
+            <input name="last_name" type="text" placeholder="digite seu sobrenome"><br>
             <input name="email" type="email" placeholder="digite seu email"><br>
             <input name="password" type="password" placeholder="digite uma senha"><br>
-            <input name="cpf" type="text" placeholder="Digite seu CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato: 111.111.111-11" required>
             <input name="foto_perfil" type="file" placeholder="foto de perfil">
             <a href="{% url 'home' %}" type="submit"> enviar </a>
         </form>
