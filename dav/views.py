@@ -39,7 +39,7 @@ def home(request:HttpRequest):
 def salvar_imagem(request: HttpRequest):
     if request.method == "POST":
         image = request.FILES.get("logo_loja")
-        request.user.logo_images = image
+        request.user.logo_loja = image
         request.user.save()
     return redirect("home")
 
