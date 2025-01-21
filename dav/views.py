@@ -27,7 +27,7 @@ def administrador(request:HttpRequest):
         user.set_password(password)
         user.save()  
 
-        messages.success(request, "Admin criado com sucesso.")
+        messages.success(request, "admin criado com sucesso.")
         return redirect("home")
         
     except Exception as e:
@@ -35,9 +35,6 @@ def administrador(request:HttpRequest):
         return redirect("dav")
     
       
-
-
-
 def home(request:HttpRequest):
     if request.method == "POST":
         logo_loja = request.FILES.get("logo_loja")
