@@ -6,11 +6,6 @@ from django.http import HttpRequest
 from django.contrib.auth import login
 
 
-@login_required(login_url="administrador")
-def home(request: HttpRequest):
-    return render(request, "home.html")
-
-
 def administrador(request: HttpRequest):
     if request.method != "POST":
         return render(request, "dav.html")
@@ -43,13 +38,6 @@ def administrador(request: HttpRequest):
         messages.error(request, f"Erro ao criar o admin: {str(e)}")
         return redirect("dav")
 
-      
-def home(request:HttpRequest):
-    if request.method == "POST":
-        logo_loja = request.FILES.get("logo_loja")
-        return render(request, 'home.html', {logo_loja:"logo_loja"})
-    return render(request, 'home.html')
-
 @login_required(login_url="home")
 def salvar_imagem(request: HttpRequest):
     if request.method == "POST":
@@ -57,3 +45,11 @@ def salvar_imagem(request: HttpRequest):
         request.user.logo_loja = image
         request.user.save()
     return redirect("home")
+      
+def home(request:HttpRequest):
+    if request.method == "POST":
+        logo_loja = request.FILES.get("logo_loja")
+        return render(request, 'home.html', {logo_loja:"logo_loja"})
+    return render(request, 'home.html')
+
+
