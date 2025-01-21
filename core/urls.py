@@ -4,9 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('futmax/', include("dav.urls")),
-
+    path("admin/", admin.site.urls),
+    path("futmax/", include("dav.urls")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-]  
+]
