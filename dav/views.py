@@ -60,10 +60,11 @@ def home(request:HttpRequest):
         imagem_produto = Produtos.objects.all()
         imagem_promocao = Produtos_promocoes.objects.all()
         logo_loja = request.FILES.get("logo_loja")
-        return render(request, 'home.html',
-                        {logo_loja:"logo_loja"}, 
-                        {imagem_produto:"imagem_produto"}, 
-                        {imagem_promocao:"imagem_promocao"})
+        return render (request, 'home.html',
+                        {"logo_loja": logo_loja, 
+                        "imagem_produto": imagem_produto, 
+                        "imagem_promocao": imagem_promocao})
+
     
 
 @login_required(login_url="home")
