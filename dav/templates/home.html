@@ -7,22 +7,15 @@
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock head %}
 
-
 {% block body %}
 <h1 class="logo_empresa"> LOGO DA EMPRESA AQUII </h1>
 <div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      {% for i in imagem_promocao %}
-        <img src="{{ imagem_promocao.url }}" class="imagem" alt="{{ nome_produto }}">
-      {% endfor %}
-    </div>
-    <div class="carousel-item">
-      <img src="" class="imagem" alt="{{ nome_produto }}">
-    </div>
-    <div class="carousel-item">
-      <img src="" class="imagem" alt="{{ nome_produto }}">
-    </div>
+    {% for produto in produtos %}
+      <div class="carousel-item active">
+        <img src="{{ produto.imagem.url }}" class="imagem" alt="{{ produto.nome }}" />
+      </div>
+    {% endfor %}
   </div>
 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
