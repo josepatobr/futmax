@@ -58,7 +58,7 @@ def home(request:HttpRequest):
     
     if request.method == "POST":
         imagem_produto = Produtos.objects.all()
-        imagem_promocao = Produtos_promocoes.objects.all("imagem_promocao")
+        imagem_promocao = Produtos_promocoes.objects.all()
         logo_loja = request.FILES.get("logo_loja")
         return render(request, 'home.html',
                         {logo_loja:"logo_loja"}, 
