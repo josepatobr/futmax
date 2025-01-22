@@ -1,0 +1,15 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-inline: 40px;
+  }
+
+.logo_empresa{
+   border: 2px solid black;
+   display: flex;
+   padding: 20px;
+   padding-bottom: 20px;
+   padding-top: 20px;
+   
+}

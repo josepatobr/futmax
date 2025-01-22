@@ -1,14 +1,34 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Perfil do Administrador{% endblock title %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock head %}
+
+
 {% block body %}
-  <div class="profile_card">
-    <h1>Logo da Loja</h1>
-    <form method="POST" action="{% url 'salvar_imagem' %}" enctype="multipart/form-data">
-      {% csrf_token %}
-      <input name="logo_loja" type="file" placeholder="Escolha a foto da sua loja" />
-      <button type="submit">Enviar</button>
-    </form>
+<h1 class="logo_empresa"> FOTO AQUII </h1>
+<div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% url 'imagem_promocao' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="" class="d-block w-100" alt="...">
+    </div>
   </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 {% endblock body %}

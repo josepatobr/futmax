@@ -3,7 +3,8 @@
 {% block title %} Admin {% endblock title %}
 
 {% block body %}
-  <form method="POST" action="{% url 'administrador' %}">{% csrf_token %}
+  <form method="POST" enctype="multipart/form-data" action="{% url 'administrador' %}">
+{% csrf_token %}
     <input name="first_name" type="text" placeholder="Digite seu primeiro nome" />
     <br />
     <input name="last_name" type="text" placeholder="Digite seu sobrenome" />
@@ -14,5 +15,5 @@
     <br />
     <input name="foto_perfil" type="file" placeholder="Foto de perfil" />
     <button type="submit">Enviar</button>
-  </form>
+  </form> 
 {% endblock body %}
