@@ -25,11 +25,11 @@ class Produtos(models.Model):
     def __str__(self):
         return self.nome_produto
     
-class Produtos_promoçao(Produtos):
+class Produtos_promocoes(Produtos):
     imagem_promocao = models.ImageField(upload_to="imagem_promocao/", null=False)
 
     def __str__(self):
-        return self.imagem_promocao
+        return self.nome_produto
     
     
 

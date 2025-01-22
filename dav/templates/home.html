@@ -9,17 +9,17 @@
 
 
 {% block body %}
-<h1 class="logo_empresa"> FOTO AQUII </h1>
+<h1 class="logo_empresa"> LOGO DA EMPRESA AQUII </h1>
 <div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{% url 'imagem_promocao' %}" class="d-block w-100" alt="...">
+      <img src="{{ imagem_promocao.url }}" class="imagem" alt="{{ nome_produto }}">
     </div>
     <div class="carousel-item">
-      <img src="" class="d-block w-100" alt="...">
+      <img src="" class="imagem" alt="{{ nome_produto }}">
     </div>
     <div class="carousel-item">
-      <img src="" class="d-block w-100" alt="...">
+      <img src="" class="imagem" alt="{{ nome_produto }}">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
