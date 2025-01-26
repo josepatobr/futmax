@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.contrib.auth import login
+from .email import send_email
 
 from .models import User, Produto, ProdutoPromocao, Token
 
@@ -65,8 +66,12 @@ def login_email(request: HttpRequest):
     
     if request.method == "POST":
         email = request.POST.get("email")
-
+        user = User.objects.filter(user=user).exists()
+        
         if email == User.objects.filter(email=email).exists():
+            email_subject = f"Seu codigo de acesso é {(Token)}"
+            email_template = "emails/codigo.html"
+            send_email(user, email_subject, email_template)
             return redirect("verificacao")
 
 
@@ -99,3 +104,5 @@ def salvar_imagem(request: HttpRequest):
         request.user.logo_loja = image
         request.user.save()
     return redirect("home")
+
+
