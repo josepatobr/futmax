@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.contrib.auth import login
 
-from .models import User, Produto, ProdutoPromocao
+from .models import User, Produto, ProdutoPromocao, Token
 
 
-def administrador(request: HttpRequest):
+def cadastro(request: HttpRequest):
     if request.method != "POST":
         return render(request, "dav.html")
 
@@ -55,6 +55,24 @@ def administrador(request: HttpRequest):
     except Exception as e:
         messages.error(request, f"Erro ao criar o admin: {str(e)}")
         return redirect("administrador")
+
+
+
+
+def login_email(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        if email == User.objects.filter(email=email).exists():
+            return redirect("verificacao")
+
+
+def verificacao(request: HttpRequest):
+    return None
+
 
 
 @login_required(login_url="administrador")

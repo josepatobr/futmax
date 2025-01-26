@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Admin {% endblock title %}
+
+{% block body %}
+ 
+
+  <form method="POST" action="{% url 'verificacao' %}">{% csrf_token %}
+    <h1> vc vai receber um codigo pelo seu email </h1>
+    <label class="input-icon" for="password">
+      <input  type="text" name="password" placeholder="Digite o codigo" />
+    </label>
+
+
+    <button type="submit" class="btn-cadastro">Entrar</button>
+
+   
+
+{% endblock body %}
