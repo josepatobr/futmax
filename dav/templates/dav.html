@@ -4,8 +4,7 @@
 
 {% block body %}
   <form method="POST" enctype="multipart/form-data" action="{% url 'cadastro' %}">
-  {% csrf_token %}
-
+    {% csrf_token %}
     <input name="first_name" type="text" placeholder="Digite seu primeiro nome" />
     <br />
     <input name="last_name" type="text" placeholder="Digite seu sobrenome" />
@@ -16,39 +15,31 @@
     <br />
     <input name="foto_perfil" type="file" placeholder="Foto de perfil" />
     <button type="submit">Enviar</button>
-
-    <div class="toggle-link" onclick="toggleForm()">Já tem uma conta? Faça login aqui.</div>
+    <button type="button"class="toggle-link" onclick="toggleForm()">
+      Já tem uma conta? Faça login aqui.
+    </button>
   </form>
 
-
-
-  <form method="POST" action="{% url 'login_email' %}">{% csrf_token %}
-
+  <form method="POST" action="{% url 'login_email' %}">
+    {% csrf_token %}
     <label class="input-icon" for="password">
       <input type="email" name="email" placeholder="Digite seu email" />
     </label>
 
-    <label class="input-icon" for="password">
-      <input  type="email" name="password" placeholder="Digite o codigo" />
-    </label>
-
-
     <button type="submit" class="btn-cadastro">Entrar</button>
-
-    <div class="toggle-link" onclick="toggleForm()">Não tem uma conta? Cadastre-se aqui.</div>
+    <button type="button" class="toggle-link" onclick="toggleForm()">
+      Não tem uma conta? Cadastre-se aqui.
+    </button>
   </form>
 
 {% endblock body %}
-
-
-
 
 {% block js %}
   <script>
     function toggleForm() {
       const signUpForm = document.getElementById("signUpForm");
       const signInForm = document.getElementById("signInForm");
-      
+
       signUpForm.classList.toggle("active");
       signInForm.classList.toggle("active");
     };

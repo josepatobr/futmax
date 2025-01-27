@@ -8,79 +8,7 @@ from .email import send_email
 from .models import User, Produto, ProdutoPromocao, Token
 
 
-def cadastro(request: HttpRequest):
-    if request.method != "POST":
-        return render(request, "dav.html")
-
-    first_name = request.POST.get("first_name")
-    last_name = request.POST.get("last_name")
-    email = request.POST.get("email")
-    password = request.POST.get("password")
-    foto_perfil = request.FILES.get("foto_perfil")
-
-    if User.objects.filter(email=email).exists():
-        messages.error(request, "Já existe um administrador com este email.")
-        return redirect("administrador")
-
-    if len(first_name) < 3 and len(first_name) > 20:
-        messages.error(
-            request, "Seu nome precisa ter no mínimo 3 letras e no máximo 20."
-        )
-        return redirect("administrador")
-
-    if len(last_name) < 3 and len(last_name) > 200:
-        messages.error(
-            request, "Seu sobrenome precisa ter no mínimo 3 letras e no máximo 200."
-        )
-        return redirect("administrador")
-
-    if len(password) < 4 and len(password) > 10:
-        messages.error(
-            request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
-        )
-        return redirect("administrador")
-
-    try:
-        user = User.objects.create_user(
-            username=email,
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
-            foto_perfil=foto_perfil,
-        )
-        login(request, user)
-        messages.success(request, "Admin criado com sucesso.")
-        return redirect("home")
-
-    except Exception as e:
-        messages.error(request, f"Erro ao criar o admin: {str(e)}")
-        return redirect("administrador")
-
-
-
-
-def login_email(request: HttpRequest):
-    if request.user.is_authenticated:
-        return redirect("home")
-    
-    if request.method == "POST":
-        email = request.POST.get("email")
-        user = User.objects.filter(user=user).exists()
-        
-        if email == User.objects.filter(email=email).exists():
-            email_subject = f"Seu codigo de acesso é {(Token)}"
-            email_template = "emails/codigo.html"
-            send_email(user, email_subject, email_template)
-            return redirect("verificacao")
-
-
-def verificacao(request: HttpRequest):
-    return None
-
-
-
-@login_required(login_url="administrador")
+@login_required(login_url="cadastro")
 def home(request: HttpRequest):
     produtos = Produto.objects.all()
     imagem_promocao = ProdutoPromocao.objects.all()
@@ -97,6 +25,84 @@ def home(request: HttpRequest):
     )
 
 
+def cadastro(request: HttpRequest):
+    if request.method != "POST":
+        return render(request, "dav.html")
+
+    first_name = request.POST.get("first_name")
+    last_name = request.POST.get("last_name")
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    foto_perfil = request.FILES.get("foto_perfil")
+
+    if User.objects.filter(email=email).exists():
+        messages.error(request, "Já existe um usuário com este email.")
+        return redirect("cadastro")
+
+    if len(first_name) < 3 and len(first_name) > 20:
+        messages.error(
+            request, "Seu nome precisa ter no mínimo 3 letras e no máximo 20."
+        )
+        return redirect("cadastro")
+
+    if len(last_name) < 3 and len(last_name) > 200:
+        messages.error(
+            request, "Seu sobrenome precisa ter no mínimo 3 letras e no máximo 200."
+        )
+        return redirect("cadastro")
+
+    if len(password) < 4 and len(password) > 10:
+        messages.error(
+            request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
+        )
+        return redirect("cadastro")
+
+    try:
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            foto_perfil=foto_perfil,
+        )
+        login(request, user)
+        messages.success(request, "Usuário criado com sucesso.")
+        return redirect("home")
+
+    except Exception as e:
+        messages.error(request, f"Erro ao criar o usuário: {str(e)}")
+        return redirect("cadastro")
+
+
+def login_email(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("home")
+    if request.method != "POST":
+        return redirect("cadastro")
+
+    email = request.POST.get("email")
+    if user := User.objects.filter(email=email).first():
+        token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
+        email_subject = f"Seu codigo de acesso é ({token.token})"
+        email_template = "emails/codigo.html"
+        send_email(user, email_subject, email_template)
+        return redirect("verificacao")
+
+
+def verificacao(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("home")
+    if request.method != "POST":
+        return render(request, "verificacao.html")
+
+    codigo = request.POST.get("codigo")
+    if token := Token.objects.filter(token=codigo).first():
+        login(request, token.user)
+        token.delete()
+        return redirect("home")
+
+
 @login_required(login_url="administrador")
 def salvar_imagem(request: HttpRequest):
     if request.method == "POST":
@@ -104,5 +110,3 @@ def salvar_imagem(request: HttpRequest):
         request.user.logo_loja = image
         request.user.save()
     return redirect("home")
-
-
