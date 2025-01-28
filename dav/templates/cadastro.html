@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Admin {% endblock title %}
+{% block title %}Cadastro|Login{% endblock title %}
 
 {% block body %}
   <form method="POST" enctype="multipart/form-data" action="{% url 'cadastro' %}">
@@ -15,7 +15,7 @@
     <br />
     <input name="foto_perfil" type="file" placeholder="Foto de perfil" />
     <button type="submit">Enviar</button>
-    <button type="button"class="toggle-link" onclick="toggleForm()">
+    <button type="button" class="toggle-link" onclick="toggleForm()">
       Já tem uma conta? Faça login aqui.
     </button>
   </form>
@@ -31,7 +31,6 @@
       Não tem uma conta? Cadastre-se aqui.
     </button>
   </form>
-
 {% endblock body %}
 
 {% block js %}

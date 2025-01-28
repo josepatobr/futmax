@@ -27,7 +27,7 @@ def home(request: HttpRequest):
 
 def cadastro(request: HttpRequest):
     if request.method != "POST":
-        return render(request, "dav.html")
+        return render(request, "cadastro.html")
 
     first_name = request.POST.get("first_name")
     last_name = request.POST.get("last_name")
@@ -44,17 +44,20 @@ def cadastro(request: HttpRequest):
             request, "Seu nome precisa ter no mínimo 3 letras e no máximo 20."
         )
         return redirect("cadastro")
+        return redirect("cadastro")
 
     if len(last_name) < 3 and len(last_name) > 200:
         messages.error(
             request, "Seu sobrenome precisa ter no mínimo 3 letras e no máximo 200."
         )
         return redirect("cadastro")
+        return redirect("cadastro")
 
     if len(password) < 4 and len(password) > 10:
         messages.error(
             request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
         )
+        return redirect("cadastro")
         return redirect("cadastro")
 
     try:
