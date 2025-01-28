@@ -25,7 +25,7 @@ class User(AbstractUser):
     email = models.EmailField(("email address"), unique=True, blank=False, null=False)
     verificar_email = models.BooleanField(("email verificado"), default=False)
     login_com_email = models.BooleanField(("login com email"), default=False)
-    foto_perfil = models.ImageField(upload_to="foto_perfil/", null=True)
+    foto_perfil = models.ImageField(upload_to="foto_perfil/", null=True, blank=False)
     tempo_desativar = 7 # days
     
     def __str__(self):
@@ -43,7 +43,6 @@ class Token(models.Model):
         (TIPO_LOGAR_EMAIL,("logar_email")),
     ]
 
-    token = models.CharField(max_length=255, unique=True, db_index=True, editable=False)
+    token = models.CharField(max_length=8, unique=True, db_index=True, editable=False)
  
-
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login
 from .email import send_email
 
@@ -10,7 +10,7 @@ from .models import User, Produto, ProdutoPromocao, Token
 
 def cadastro(request: HttpRequest):
     if request.method != "POST":
-        return render(request, "dav.html")
+        return render(request, "cadastro.html")
 
     first_name = request.POST.get("first_name")
     last_name = request.POST.get("last_name")
@@ -20,25 +20,25 @@ def cadastro(request: HttpRequest):
 
     if User.objects.filter(email=email).exists():
         messages.error(request, "Já existe um administrador com este email.")
-        return redirect("administrador")
+        return redirect("cadastro")
 
     if len(first_name) < 3 and len(first_name) > 20:
         messages.error(
             request, "Seu nome precisa ter no mínimo 3 letras e no máximo 20."
         )
-        return redirect("administrador")
+        return redirect("cadastro")
 
     if len(last_name) < 3 and len(last_name) > 200:
         messages.error(
             request, "Seu sobrenome precisa ter no mínimo 3 letras e no máximo 200."
         )
-        return redirect("administrador")
+        return redirect("cadastro")
 
     if len(password) < 4 and len(password) > 10:
         messages.error(
             request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
         )
-        return redirect("administrador")
+        return redirect("cadastro")
 
     try:
         user = User.objects.create_user(
@@ -55,7 +55,7 @@ def cadastro(request: HttpRequest):
 
     except Exception as e:
         messages.error(request, f"Erro ao criar o admin: {str(e)}")
-        return redirect("administrador")
+        return redirect("cadastro")
 
 
 
@@ -66,22 +66,28 @@ def login_email(request: HttpRequest):
     
     if request.method == "POST":
         email = request.POST.get("email")
-        user = User.objects.filter(user=user).exists()
-        
-        if email == User.objects.filter(email=email).exists():
-            email_subject = f"Seu codigo de acesso é {(Token)}"
-            email_template = "emails/codigo.html"
-            send_email(user, email_subject, email_template)
-            return redirect("verificacao")
+        return redirect("verificacao")
+    
+    try:    
+        user = User.objects.filter(user=email).exists()       
+        email == User.objects.filter(email=user)
+        email_subject = f"Seu codigo de acesso é {(Token)}"
+        email_template = "email/codigo.html"
+        send_email(user, email_subject, email_template)
+        return redirect("verificacao")
+    except:
+        return redirect("cadastro")
 
 
 def verificacao(request: HttpRequest):
-    return None
-
+    return HttpResponse("Aaaa")
 
 
 @login_required(login_url="administrador")
 def home(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
     produtos = Produto.objects.all()
     imagem_promocao = ProdutoPromocao.objects.all()
 

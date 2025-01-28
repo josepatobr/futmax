@@ -8,9 +8,8 @@
   <form method="POST" action="{% url 'verificacao' %}">{% csrf_token %}
     <h1> vc vai receber um codigo pelo seu email </h1>
     <label class="input-icon" for="password">
-      <input  type="text" name="password" placeholder="Digite o codigo" />
+      <input  type="text" name="codigo" placeholder="Digite o codigo" />
     </label>
-
 
     <button type="submit" class="btn-cadastro">Entrar</button>
 
