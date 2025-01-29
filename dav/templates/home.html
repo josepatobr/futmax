@@ -13,7 +13,7 @@
   <div class="carousel-inner">
     {% for produto in produtos %}
       <div class="carousel-item active">
-        <img src="{{ produto.imagem.url }}" class="imagem" alt="{{ produto.nome }}" />
+        <img src="{{ produto.imagem_promocao.url }}"  class="imagem" alt="{{ produto.nome }}" />
       </div>
     {% endfor %}
   </div>
