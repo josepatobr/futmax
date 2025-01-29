@@ -3,12 +3,11 @@
 {% block title %}Cadastro|Login{% endblock title %}
 
 {% block body %}
-
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert {{ message.tags }}"> {{ message }}</div>
-      {% endfor %}
-    {% endif %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}"> {{ message }}</div>
+    {% endfor %}
+  {% endif %}
 
   <form method="POST" enctype="multipart/form-data" action="{% url 'cadastro' %}">
     {% csrf_token %}
