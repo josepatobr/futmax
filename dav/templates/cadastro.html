@@ -1,51 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %} Admin {% endblock title %}
+{% block title %}Cadastro|Login{% endblock title %}
 
 {% block body %}
-  <form method="POST" enctype="multipart/form-data" action="{% url 'cadastro' %}">{% csrf_token %}
-    <div class="form-container sign-up-container active" id="signUpForm">
-
-      <input name="first_name" type="text" placeholder="Digite seu primeiro nome" />
-      <br />
-      <input name="last_name" type="text" placeholder="Digite seu sobrenome" />
-      <br />
-      <input name="email" type="email" placeholder="Digite seu email" />
-      <br />
-      <input name="password" type="password" placeholder="Digite uma senha" />
-      <br />
-      <input name="foto_perfil" type="file" placeholder="Foto de perfil" />
-      <button type="submit">Enviar</button>
-
-      <div class="toggle-link" onclick="toggleForm()"> entra usando o email </div>
-    </div>
+  <form method="POST" enctype="multipart/form-data" action="{% url 'cadastro' %}">
+    {% csrf_token %}
+    <input name="first_name" type="text" placeholder="Digite seu primeiro nome" />
+    <br />
+    <input name="last_name" type="text" placeholder="Digite seu sobrenome" />
+    <br />
+    <input name="email" type="email" placeholder="Digite seu email" />
+    <br />
+    <input name="password" type="password" placeholder="Digite uma senha" />
+    <br />
+    <input name="foto_perfil" type="file" placeholder="Foto de perfil" />
+    <button type="submit">Enviar</button>
+    <button type="button" class="toggle-link" onclick="toggleForm()">
+      Já tem uma conta? Faça login aqui.
+    </button>
   </form>
 
-
-
-  <form method="POST" action="{% url 'login_email' %}">{% csrf_token %}
-    <div class="form-container sign-in-container" id="signInForm">
-
+  <form method="POST" action="{% url 'login_email' %}">
+    {% csrf_token %}
     <label class="input-icon" for="password">
       <input type="email" name="email" placeholder="Digite seu email" />
     </label>
 
     <button type="submit" class="btn-cadastro">Entrar</button>
-
-    <div class="toggle-link" onclick="toggleForm()">Não tem uma conta? Cadastre-se aqui.</div>
+    <button type="button" class="toggle-link" onclick="toggleForm()">
+      Não tem uma conta? Cadastre-se aqui.
+    </button>
   </form>
-
 {% endblock body %}
-
-
-
 
 {% block js %}
   <script>
     function toggleForm() {
       const signUpForm = document.getElementById("signUpForm");
       const signInForm = document.getElementById("signInForm");
-      
+
       signUpForm.classList.toggle("active");
       signInForm.classList.toggle("active");
     };
