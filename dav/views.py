@@ -10,12 +10,10 @@ from .models import User, Produto, ProdutoPromocao, Token
 
 @login_required(login_url="cadastro")
 def home(request: HttpRequest):
-    if request.user.is_authenticated:
-        return redirect("home")
     produtos = Produto.objects.all()
     imagem_promocao = ProdutoPromocao.objects.all()
 
-    #logo_loja = request.user.logo_loja.url if request.user.logo_loja else None
+    # logo_loja = request.user.logo_loja.url if request.user.logo_loja else None
     return render(
         request,
         "home.html",
@@ -27,6 +25,8 @@ def home(request: HttpRequest):
 
 
 def cadastro(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect("home")
     if request.method != "POST":
         return render(request, "cadastro.html")
 
@@ -54,11 +54,13 @@ def cadastro(request: HttpRequest):
 
     if len(password) < 4 and len(password) > 10:
         messages.error(
-            request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10.")
+            request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
+        )
         return redirect("cadastro")
 
     try:
         user = User.objects.create_user(
+            username=email,
             first_name=first_name,
             last_name=last_name,
             email=email,
