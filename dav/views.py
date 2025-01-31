@@ -18,7 +18,7 @@ def home(request: HttpRequest):
         request,
         "home.html",
         {
-            "produtos": produtos,
+            "produto": produtos,
             "imagem_promocao": imagem_promocao,
         },
     )
@@ -79,10 +79,20 @@ def cadastro(request: HttpRequest):
 def login_email(request: HttpRequest):
     if request.user.is_authenticated:
         return redirect("home")
+    
     if request.method != "POST":
         return redirect("cadastro")
 
     email = request.POST.get("email")
+
+
+    if email is None or email.strip() == "":  
+        return redirect("cadastro")
+    
+    if not User.objects.filter(email=email).exists():
+        return redirect("cadastro")
+
+
     if user := User.objects.filter(email=email).first():
         token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
         email_subject = f"Seu codigo de acesso é ({token.token})"

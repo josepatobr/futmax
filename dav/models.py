@@ -8,14 +8,14 @@ class Produto(models.Model):
     detalhes = models.TextField(null=False, blank=False)
     preco = models.CharField(max_length=10, null=False, blank=False)
     data_venda = models.DateField()
-    imagem = models.ImageField(upload_to="imagem_produtos/", null=False)
+    imagem = models.ImageField(upload_to="imagem_produto/", null=False)
 
     def __str__(self):
         return self.nome
 
 
 class ProdutoPromocao(Produto):
-    promocao_imagem = models.ImageField(upload_to="imagem_promocoes/", null=False)
+    imagem_promocao = models.ImageField(upload_to="imagem_promocao/", null=True, blank=True)
 
     def __str__(self):
         return self.nome

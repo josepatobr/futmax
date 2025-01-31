@@ -8,12 +8,14 @@
 {% endblock head %}
 
 {% block body %}
-<h1 class="logo_empresa"> LOGO DA EMPRESA AQUII </h1>
+<h1 class="logo_empresa"> LOGO DA EMPRESA AQUI </h1>
+<hr>
 <div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
-    {% for produto in produtos %}
-      <div class="carousel-item active">
-        <img src="{{ produto.imagem_promocao.url }}"  class="imagem" alt="{{ produto.nome }}" />
+
+    {% for imagem in imagem_promocao %}
+      <div class="carousel-item {% if forloop.first %} active {% endif %}">
+        <img src="{{ imagem.imagem_promocao.url }}"  class="imagem" alt="{{ imagem.nome }}" />
       </div>
     {% endfor %}
   </div>
