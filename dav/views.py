@@ -5,23 +5,16 @@ from django.http import HttpRequest
 from django.contrib.auth import login
 from .email import send_email
 
-from .models import User, Produto, ProdutoPromocao, Token
+from .models import User, Token, Produto, Promocao
 
 
 @login_required(login_url="cadastro")
 def home(request: HttpRequest):
     produtos = Produto.objects.all()
-    imagem_promocao = ProdutoPromocao.objects.all()
+    promocoes = Promocao.objects.all()
 
     # logo_loja = request.user.logo_loja.url if request.user.logo_loja else None
-    return render(
-        request,
-        "home.html",
-        {
-            "produto": produtos,
-            "imagem_promocao": imagem_promocao,
-        },
-    )
+    return render(request, "home.html", {"produtos": produtos, "promocoes": promocoes})
 
 
 def cadastro(request: HttpRequest):
@@ -79,19 +72,17 @@ def cadastro(request: HttpRequest):
 def login_email(request: HttpRequest):
     if request.user.is_authenticated:
         return redirect("home")
-    
+
     if request.method != "POST":
         return redirect("cadastro")
 
     email = request.POST.get("email")
 
-
-    if email is None or email.strip() == "":  
+    if email is None or email.strip() == "":
         return redirect("cadastro")
-    
+
     if not User.objects.filter(email=email).exists():
         return redirect("cadastro")
-
 
     if user := User.objects.filter(email=email).first():
         token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)

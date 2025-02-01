@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('dav', '0004_alter_produtopromocao_desconto'),
+        ("dav", "0004_alter_produtopromocao_desconto"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='produtopromocao',
-            name='desconto',
-            field=models.CharField(choices=[(5, '5%'), (10, '10%'), (15, '15%'), (20, '20%'), (25, '25%')], default=10, max_length=2),
+            model_name="produtopromocao",
+            name="desconto",
+            field=models.CharField(
+                choices=[(5, "5%"), (10, "10%"), (15, "15%"), (20, "20%"), (25, "25%")],
+                default=10,
+                max_length=2,
+            ),
         ),
     ]
