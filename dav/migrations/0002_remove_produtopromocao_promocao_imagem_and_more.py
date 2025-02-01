@@ -4,24 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('dav', '0001_initial'),
+        ("dav", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='produtopromocao',
-            name='promocao_imagem',
+            model_name="produtopromocao",
+            name="promocao_imagem",
         ),
         migrations.AddField(
-            model_name='produtopromocao',
-            name='imagem_promocao',
-            field=models.ImageField(blank=True, null=True, upload_to='imagem_promocao/'),
+            model_name="produtopromocao",
+            name="imagem_promocao",
+            field=models.ImageField(
+                blank=True, null=True, upload_to="imagem_promocao/"
+            ),
         ),
         migrations.AlterField(
-            model_name='produto',
-            name='imagem',
-            field=models.ImageField(upload_to='imagem_produto/'),
+            model_name="produto",
+            name="imagem",
+            field=models.ImageField(upload_to="imagem_produto/"),
         ),
     ]
