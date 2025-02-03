@@ -6,7 +6,55 @@
 }
 
 .imagem {
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
+  position: relative;
+  display: flex;
+  width: 250px;
+  height: 250px;
+  margin: auto;
+ 
 }
+
+.carousel-inner{
+  border: 1px solid black;
+  width: 500px;
+  height: 400px;
+  padding: 75px;
+  padding-left: -25px;
+  position: relative;
+  left: 400px;
+  border-radius: 30px;
+  background-image: url("/media/imagem/palco.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 600px 400px;
+}
+
+
+.botao_avancar{
+  top: -400px;
+  right: -400px;
+  padding: 25px;
+  width: 10px;
+  display: flex;
+  position: relative;
+  padding-top: 340px;
+  border-radius: 30px;
+  border: none;
+  background-color:transparent;
+}
+
+.botao_avancar2{
+  display: flex;
+  position: relative;
+  background-color:transparent;
+  top: -797px;
+  right: -845px;
+  padding: 25px;
+  padding-top: 335px;
+  width: 10px;
+  border-radius: 30px;
+  border: none;
+}
+
+
+
