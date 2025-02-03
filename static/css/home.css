@@ -8,11 +8,11 @@
 .imagem {
   position: relative;
   display: flex;
-  width: 250px;
-  height: 250px;
-  margin: auto;
- 
-}
+  width: 150px;
+  height: 150px;
+  margin: 100px;
+  
+} 
 
 .carousel-inner{
   border: 1px solid black;
