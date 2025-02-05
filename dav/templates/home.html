@@ -14,21 +14,24 @@
   <div class="carousel-inner">
 
     {% for promocao in promocoes %}
-      <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <div id="imagem1" class="carousel-item {% if forloop.first %} active {% endif %}">
+        <h1 class="desconto"> {{ promocao.desconto }}R$ </h1>
         <img src="{{ promocao.imagem.url }}"  class="imagem" alt="{{ promocao.title }}" />
       </div>
     {% endfor %}
  
 
     {% for promocao in promocoes %}
-      <div class="carousel-item">
+      <div class="carousel-item" id="imagem1">
+        <h1 class="desconto"> {{ promocao.desconto }}R$ </h1>
         <img src="{{ promocao.imagem.url }}"  class="imagem" alt="{{ promocao.title }}" />
       </div>
     {% endfor %}
 
 
     {% for promocao in promocoes %}
-      <div class="carousel-item ">
+    <div class="carousel-item" id="imagem1">
+      <h1 class="desconto"> {{ promocao.desconto }}R$ </h1>
         <img src="{{ promocao.imagem.url }}"  class="imagem" alt="{{ promocao.title }}" />
       </div>
     {% endfor %}

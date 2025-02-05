@@ -4,30 +4,34 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.contrib.auth import login
 from .email import send_email
-
 from .models import User, Token, Produto, Promocao
-
+import bcrypt
 
 @login_required(login_url="cadastro")
 def home(request: HttpRequest):
     produtos = Produto.objects.all()
     promocoes = Promocao.objects.all()
+    
+
 
     # logo_loja = request.user.logo_loja.url if request.user.logo_loja else None
     return render(request, "home.html", {"produtos": produtos, "promocoes": promocoes})
 
 
 def cadastro(request: HttpRequest):
+    
     if request.user.is_authenticated:
         return redirect("home")
     if request.method != "POST":
         return render(request, "cadastro.html")
+        
 
-    first_name = request.POST.get("first_name")
+    first_name = request.POST.get("first_name") 
     last_name = request.POST.get("last_name")
     email = request.POST.get("email")
     password = request.POST.get("password")
-    foto_perfil = request.FILES.get("foto_perfil")
+    password_criptografado =  bcrypt.hashpw(b"123", bcrypt.gensalt())
+
 
     if User.objects.filter(email=email).exists():
         messages.error(request, "Já existe um usuário com este email.")
@@ -50,6 +54,7 @@ def cadastro(request: HttpRequest):
             request, "A senha precisa ter no mínimo 4 caracteres e no máximo 10."
         )
         return redirect("cadastro")
+    
 
     try:
         user = User.objects.create_user(
@@ -57,8 +62,8 @@ def cadastro(request: HttpRequest):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            password=password,
-            foto_perfil=foto_perfil,
+            password=password_criptografado,
+        
         )
         login(request, user)
         messages.success(request, "Usuário criado com sucesso.")
@@ -86,9 +91,10 @@ def login_email(request: HttpRequest):
 
     if user := User.objects.filter(email=email).first():
         token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
-        email_subject = f"Seu codigo de acesso é ({token.token})"
-        email_template = "emails/codigo.html"
-        send_email(user, email_subject, email_template)
+        
+        Login_com_email = f"Seu codigo de acesso é ({Token.token})"
+        email_template = "email/codigo.html"
+        send_email(user, Login_com_email, email_template)
         return redirect("verificacao")
 
 

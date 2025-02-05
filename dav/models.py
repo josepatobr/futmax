@@ -7,6 +7,7 @@ from decimal import Decimal
 import secrets
 
 
+
 class Produto(models.Model):
     nome = models.CharField("Nome do Produto", max_length=255, null=False, blank=False)
     detalhes = models.TextField("Detalhes", null=True, blank=True)
@@ -104,7 +105,6 @@ class User(AbstractUser):
     email = models.EmailField("Email address", unique=True, blank=False, null=False)
     verificar_email = models.BooleanField("Email verificado", default=False)
     login_com_email = models.BooleanField("Login com email", default=False)
-    foto_perfil = models.ImageField(upload_to="foto_perfil/", null=True)
 
     def __str__(self) -> str:
         return self.username
@@ -114,11 +114,11 @@ class User(AbstractUser):
 
 
 class Token(models.Model):
-    TIPO_EMAIL_VERIFICADO = "verificar_email"
+    TIPO_EMAIL_VERIFICADO = "email_verificado"
     TIPO_LOGAR_EMAIL = "logar_email"
 
     TOKEN_TYPE = [
-        (TIPO_EMAIL_VERIFICADO, "verificar_email"),
+        (TIPO_EMAIL_VERIFICADO, "email_verificado"),
         (TIPO_LOGAR_EMAIL, "logar_email"),
     ]
 
