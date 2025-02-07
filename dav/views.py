@@ -92,7 +92,7 @@ def login_email(request: HttpRequest):
     if user := User.objects.filter(email=email).first():
         token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
         
-        Login_com_email = f"Seu codigo de acesso é ({Token.token})"
+        Login_com_email = f"Seu codigo de acesso é {token.token}"
         email_template = "email/codigo.html"
         send_email(user, Login_com_email, email_template)
         return redirect("verificacao")
