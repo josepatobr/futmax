@@ -1,0 +1,12 @@
+#[project]
+name = "futmax"
+version = "0.1.0"
+description = "teste asdasd"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bcrypt>=4.2.1",
+    "django>=5.1.6",
+    "django-decouple>=2.1",
+    "pillow>=11.1.0",
+]
