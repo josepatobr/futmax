@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from django.contrib.auth import login
 from .email import send_email
 from .models import User, Token, Produto, Promocao
-import bcrypt
+
 
 @login_required(login_url="cadastro")
 def home(request: HttpRequest):
@@ -30,7 +30,6 @@ def cadastro(request: HttpRequest):
     last_name = request.POST.get("last_name")
     email = request.POST.get("email")
     password = request.POST.get("password")
-    password_criptografado =  bcrypt.hashpw(b"123", bcrypt.gensalt())
 
 
     if User.objects.filter(email=email).exists():
@@ -62,7 +61,7 @@ def cadastro(request: HttpRequest):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            password=password_criptografado,
+            password=password,
         
         )
         login(request, user)
@@ -90,12 +89,13 @@ def login_email(request: HttpRequest):
         return redirect("cadastro")
 
     if user := User.objects.filter(email=email).first():
-        token = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
-        
-        Login_com_email = f"Seu codigo de acesso é {token.token}"
+        token, _ = Token.objects.get_or_create(user=user, type=Token.TIPO_LOGAR_EMAIL)
+        Login_com_email = "Seu codigo de acesso é: "
         email_template = "email/codigo.html"
-        send_email(user, Login_com_email, email_template)
+        send_email(user, Login_com_email, email_template, token=token.token)
         return redirect("verificacao")
+    else:
+        return redirect("cadastro")
 
 
 def verificacao(request: HttpRequest):
